@@ -1,4 +1,4 @@
-package com.sangTran.Restaurant;
+package com.sangtran.restaurant;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

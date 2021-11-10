@@ -1,27 +1,18 @@
-package com.sangTran.Restaurant.entity;
+package com.sangtran.restaurant.entity;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 @Entity
 @Table(name ="bill")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 
 public class BillEntity {
 	
@@ -33,9 +24,70 @@ public class BillEntity {
 	@Column(name = "orderTime")
 	private Date orderTime;
 	
-	@Column(name = "totalPrice")
+	@Column(name = "quantity")
 	private int quantity;
 	
-	@OneToMany(mappedBy = "menu", fetch = FetchType.LAZY)
-	private Set<MenuEntity> menuEntity = new HashSet<MenuEntity>();
+	@Column(name = "totalPrice")
+	private double TotalPrice;
+	
+	@Column(name = "Menu_id")
+	@OneToMany(mappedBy = "bill")	
+	private Set<MenuEntity> menuEntity;
+		
+
+	public BillEntity() {
+		super();
+	}
+
+	public BillEntity(Long id, Date orderTime, int quantity, double totalPrice, Set<MenuEntity> menuEntity) {
+		super();
+		this.id = id;
+		this.orderTime = orderTime;
+		this.quantity = quantity;
+		TotalPrice = totalPrice;
+		this.menuEntity = menuEntity;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Date getOrderTime() {
+		return orderTime;
+	}
+
+	public void setOrderTime(Date orderTime) {
+		this.orderTime = orderTime;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public double getTotalPrice() {
+		return TotalPrice;
+	}
+
+	public void setTotalPrice(double totalPrice) {
+		TotalPrice = totalPrice;
+	}
+
+	public Set<MenuEntity> getMenuEntity() {
+		return menuEntity;
+	}
+
+	public void setMenuEntity(Set<MenuEntity> menuEntity) {
+		this.menuEntity = menuEntity;
+	}
+	
+	
+	
 }

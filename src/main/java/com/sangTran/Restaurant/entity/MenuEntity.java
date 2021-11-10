@@ -1,10 +1,10 @@
-package com.sangTran.Restaurant.entity;
+package com.sangtran.restaurant.entity;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,14 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 @SuppressWarnings("serial")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name="menu")
 public class MenuEntity implements java.io.Serializable {
@@ -33,22 +26,118 @@ public class MenuEntity implements java.io.Serializable {
 	@Column(name = "name", nullable = false)
 	private String name;
 	
-	@Column(name = "description", nullable = false)
+	@Column(name = "description")
 	private String description;
 	
-	@Column(name = "images")
-	private ImagesEntity images;
+	@Column(name = "image")
+	private String image;
 	
 	@Column(name = "price", nullable = false)
 	private double price;
 	
-	@OneToMany(mappedBy = "category")
-	private Set<CategoryEntity> category = new HashSet<CategoryEntity>();
+	@Column(name = "additionDetail")
+	private String additionDetail ;
 	
-	@OneToMany(mappedBy = "images")
-	private Set<ImagesEntity> imagesEntity = new HashSet<ImagesEntity>();
+	@OneToMany(mappedBy = "menu")
+	private Set<FoodEntity> foodEntity;
 	
-	@ManyToOne
-	@JoinColumn(name="bill_id")
-	private BillEntity billEntity = new BillEntity();
+	@OneToMany(mappedBy = "menu")
+	private Set<DrinkEntity> drinkEntity;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "bill_id", referencedColumnName="id",nullable=false,unique=true)
+	private BillEntity bill;
+
+	public MenuEntity() {
+		super();
+	}
+
+	public MenuEntity(Long id, String name, String description, String image, double price, String additionDetail,
+			Set<FoodEntity> foodEntity, Set<DrinkEntity> drinkEntity, BillEntity bill) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.image = image;
+		this.price = price;
+		this.additionDetail = additionDetail;
+		this.foodEntity = foodEntity;
+		this.drinkEntity = drinkEntity;
+		this.bill = bill;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String images) {
+		this.image = images;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public String getAdditionDetail() {
+		return additionDetail;
+	}
+
+	public void setAdditionDetail(String additionDetail) {
+		this.additionDetail = additionDetail;
+	}
+
+	public Set<FoodEntity> getFoodEntity() {
+		return foodEntity;
+	}
+
+	public void setFoodEntity(Set<FoodEntity> foodEntity) {
+		this.foodEntity = foodEntity;
+	}
+
+	public Set<DrinkEntity> getDrinkEntity() {
+		return drinkEntity;
+	}
+
+	public void setDrinkEntity(Set<DrinkEntity> drinkEntity) {
+		this.drinkEntity = drinkEntity;
+	}
+
+	public BillEntity getBill() {
+		return bill;
+	}
+
+	public void setBill(BillEntity bill) {
+		this.bill = bill;
+	}
+	
+	
 }
+
